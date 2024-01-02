@@ -8,6 +8,7 @@ function draw(ctx,location) {
   ctx.beginPath();
   ctx.fillStyle="red";
   ctx.fillRect(x, y, 50, 50);
+  ctx.stroke();
 
 }
 
