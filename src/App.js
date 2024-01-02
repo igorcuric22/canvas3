@@ -10,10 +10,12 @@ function draw(ctx,location) {
   ctx.fillRect(x, y, 50, 50);
   ctx.stroke();
 
+
 }
 
 function App() {
-  const canvasRef = React.useRef(null)  
+  const canvasRef = React.useRef(null);
+  const [locations, setLocations] = React.useState([]);  
   
   return (
     <canvas
@@ -21,9 +23,11 @@ function App() {
       width={window.innerWidth}
       height={window.innerHeight}
       onClick={e => {
-        const canvas = canvasRef.current
-        const ctx = canvas.getContext('2d')
-        draw(ctx, { x: e.clientX, y: e.clientY })
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        const newLocation = { x: e.clientX, y: e.clientY };
+        setLocations([...locations, newLocation]);
+        draw(ctx, newLocation);
       }}
     />
   )
