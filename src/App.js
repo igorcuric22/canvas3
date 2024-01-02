@@ -14,8 +14,15 @@ function draw(ctx,location) {
 }
 
 function App() {
-  const canvasRef = React.useRef(null);
-  const [locations, setLocations] = React.useState([]);  
+  const [locations, setLocations] = React.useState([])
+  const canvasRef = React.useRef(null)  
+  
+  React.useEffect(() => {
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext('2d')
+    ctx.clearRect(0, 0, window.innerHeight, window.innerWidth)
+    locations.forEach(location => draw(ctx, location))
+  })  
   
   return (
     <canvas
@@ -23,14 +30,10 @@ function App() {
       width={window.innerWidth}
       height={window.innerHeight}
       onClick={e => {
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext('2d');
-        const newLocation = { x: e.clientX, y: e.clientY };
-        setLocations([...locations, newLocation]);
-        draw(ctx, newLocation);
+        const newLocation = { x: e.clientX, y: e.clientY }
+        setLocations([...locations, newLocation])
       }}
     />
   )
 }
-
-export default App;
+export default App
