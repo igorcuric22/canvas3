@@ -1,5 +1,5 @@
 import React from 'react'
-
+import './App.css'
 
 function draw(ctx,location) {
   const {x,y}=location;
@@ -23,17 +23,31 @@ function App() {
     locations.forEach(location => draw(ctx, location));
   })  
   
+  function handleCanvasClick(e) {
+    const newLocation = { x: e.clientX, y: e.clientY }
+    setLocations([...locations, newLocation])
+  }  
+  
+  function handleClear() {
+    setLocations([])
+  }  
+  
+  function handleUndo() {
+    setLocations(locations.slice(0, -1))
+  }  
+  
   return (
-    <canvas
-      ref={canvasRef}
-      width={window.innerWidth}
-      height={window.innerHeight}
-      onClick={e => {
-        const newLocation = { x: e.clientX, y: e.clientY };
-        console.log(newLocation);
-        setLocations([...locations, newLocation]);
-      }}
-    />
+    <>
+      <button onClick={handleClear}>Clear</button>
+      <button onClick={handleUndo}>Undo</button>
+      <canvas
+        ref={canvasRef}
+        width={window.innerWidth}
+        height={window.innerHeight}
+        onClick={handleCanvasClick}
+      />
+    </>
   )
 }
-export default App
+
+export default App;
