@@ -10,8 +10,21 @@ function draw(ctx,location) {
   ctx.stroke();
 }
 
+// our first custom hook!
+function usePersistentState(init) {
+  const [value, setValue] = React.useState(
+    JSON.parse(localStorage.getItem('draw-app')) || init
+  )  
+  
+  React.useEffect(() => {
+    localStorage.setItem('draw-app', JSON.stringify(value))
+  })
+  
+  return [value, setValue]}
+
+
 function App() {
-  const [locations, setLocations] = React.useState(
+  const [locations, setLocations] =usePersistentState(
     JSON.parse(localStorage.getItem('draw-app')) || [] );
 
   const canvasRef = React.useRef(null);  
